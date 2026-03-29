@@ -29,8 +29,6 @@
         config,
         ...
       }: let
-        pkgs = config.pkgs;
-
         tmuxConfig =
           ''
             set-option -g status-keys ${config.keyMode}
@@ -87,7 +85,7 @@
 
           shell = lib.mkOption {
             default = null;
-            example = "${lib.getExe pkgs.bash}";
+            example = "${lib.getExe config.pkgs.bash}";
             type = lib.types.nullOr lib.types.nonEmptyStr;
             description = "Set the default-shell tmux variable.";
           };
@@ -100,10 +98,10 @@
         };
 
         config = {
-          package = pkgs.tmux;
+          package = config.pkgs.tmux;
 
           flags = {
-            "-f" = "${pkgs.writeText "config" tmuxConfig}";
+            "-f" = "${config.pkgs.writeText "config" tmuxConfig}";
           };
         };
       }
