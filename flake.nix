@@ -23,7 +23,6 @@
         eval = lib.evalModules {
           modules = [./modules];
           specialArgs = {pkgs = pkgs;};
-          prefix = "nmux";
         };
 
         cfg = eval.config.nmux;
@@ -53,10 +52,12 @@
           + cfg.extraConfig;
       in
         pkgs.symlinkJoin {
-          name = "nmux";
+          name = "tmux";
           buildInputs = [pkgs.makeWrapper];
           paths = [pkgs.tmux];
-          postBuild = "wrapProgram $out/bin/tmux --append-flags \"-f ${tmuxConfig}\"";
+          postBuild = ''
+            wrapProgram $out/bin/tmux --append-flags "-f ${pkgs.writeText "config" tmuxConfig}"
+          '';
         };
     });
   };
