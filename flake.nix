@@ -69,5 +69,7 @@
     packages = forAllSystems (system: {
       default = self.mkPackage {system = system;};
     });
+
+    meta.mainProgram = "tmux";
   };
 }
