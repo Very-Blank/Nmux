@@ -35,6 +35,8 @@
 
       tmuxConfig =
         ''
+          set-option -s command-alias[6] q='kill-session'
+
           set-option -g status-keys ${cfg.keyMode}
           set-option -g mode-keys ${cfg.keyMode}
           set-option -s escape-time ${toString cfg.escapeTime}
